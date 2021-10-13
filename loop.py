@@ -29,8 +29,9 @@ def chunk_at_a_time(chunk_size, iterable, three_items = tuple(), new_iterable = 
 
     yield from chunk_at_a_time(chunk_size, iterable, tuple(rest), new_iterable + (first,), count + 1)
 
-three_at_a_time = partial(chunk_at_a_time, 3)
 two_at_a_time = partial(chunk_at_a_time, 2)
+three_at_a_time = partial(chunk_at_a_time, 3)
+four_at_a_time = partial(chunk_at_a_time, 4)
 
 """
 for item in three_at_a_time(iter(range(20))):

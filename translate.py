@@ -1,4 +1,4 @@
-from loop import num_items_per_loop, three_at_a_time, two_at_a_time
+from loop import num_items_per_loop, four_at_a_time, three_at_a_time, two_at_a_time
 '''
 Two rings to find them
 One ring to find them all
@@ -147,6 +147,30 @@ def make_proper(words):
         #yield second
         #print("w", first, second)
 
+def prepose_verbs(words):
+    try:
+        first = next(words)
+    except StopIteration:
+        return
+
+    try:
+        second = next(words)
+    except StopIteration:
+        yield first
+        return
+
+    if first['type'] == 'preposition' and first['english'] == 'to' and second['type'] == 'verb':
+        yield {
+            'english': first['english'] + ' ' + second['english'],
+            'black_speech': second['black_speech'] + 'at',
+            'types': ('preposition', 'verb'),
+        }
+    else:
+        yield first
+        yield second
+
+    for item in prepose_verbs(words):
+        yield item
 
 def translate_sentence(sentence):
     meta_sentence = (
@@ -155,11 +179,11 @@ def translate_sentence(sentence):
     )
 
     proper_english_sentence = make_proper(meta_sentence)
-    from pprint import pprint
 
-    ruled_sentence = tuple(proper_english_sentence)
-    # print('rul', ruled_sentence)
+    ruled_sentence = tuple(prepose_verbs(proper_english_sentence))
 
+
+    """
     try:
         while True:
             d = next(meta_sentence)
@@ -174,6 +198,7 @@ def translate_sentence(sentence):
                 ruled_sentence.append(d['black_speech'])
     except StopIteration:
         pass
+    """
 
     return sentence + ' = ' + ' '.join(
         d['black_speech'] for d in ruled_sentence)
@@ -187,14 +212,14 @@ Ash nazg gimbatul
 """
 
 # Ash nazg gimbu
-print(translate_sentence('one ring to find'))
+#print(translate_sentence('one ring to find'))
 
 # Ash nazg gimbatul
-print(translate_sentence('one ring to find them'))
+#print(translate_sentence('one ring to find them'))
 
 # Ash nazg gimbatuluk
-print(translate_sentence('one ring to find them all'))
-print('---')
+#print(translate_sentence('one ring to find them all'))
+#print('---')
 
 for sentence in ('one ring to rule them all', 'one ring to find them', 'one ring to bring them all', 'And in the darkness bind them'):
     print(translate_sentence(sentence))
@@ -206,4 +231,4 @@ for sentence in ('one ring to rule them all', 'one ring to find them', 'one ring
 And in the darkness bind them
 Agh burzum-ishi krimpatul
 """
-print(translate_sentence('And in the darkness bind them'))
+#print(translate_sentence('And in the darkness bind them'))
