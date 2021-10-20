@@ -19,26 +19,14 @@ You need one ring to find them
 I need one ring to find them
 '''
 
-
 """
-
-One Ring to bring them all
-Ash nazg thrakatuluk
-
-And in the darkness bind them
-Agh burzum-ishi krimpatul
+You need one ring to find them
+bolk ash nazg gimbatul
 """
 
 """
-One Ring to rule them
-
-Ash nazg durbatuluk
-"""
-
-
-"""
-One Ring to find them
-Ash nazg gimbatul
+I need one ring to find them
+bolk ash nazg gimbatul
 """
 
 numbers = [
@@ -46,79 +34,35 @@ numbers = [
     'krul',
 ]
 
+def split_line(line):
+    first, second, third = line.split(',')
+    return {
+        'english': first,
+        'black_speech': second,
+        'type': third,
+    }
+
+def build_dic():
+    with open('BlackSpeech.txt', encoding='latin') as f:
+        text = f.read()
+
+    return [
+        split_line(line)
+        for line in text.splitlines()
+    ]
+
 dic = [
-    {
-        'english': 'one',
-        'black_speech': 'ash',
-        'type': 'number',
-    },
-    {
-        'english': 'ring',
-        'black_speech': 'nazg',
-        'type': 'noun',
-    },
-    {
-        'english': 'to',
-        'black_speech': 'u',
-        'type': 'preposition',
-    },
-    {
-        'english': 'in',
-        'black_speech': 'ishi',
-        'type': 'preposition',
-    },
-    {
-        'english': 'bring',
-        'black_speech': 'thrak',
-        'type': 'verb',
-    },
-    {
-        'english': 'find',
-        'black_speech': 'gimb',
-        'type': 'verb',
-    },
-    {
-        'english': 'rule',
-        'black_speech': 'durb',
-        'type': 'verb',
-    },
-    {
-        'english': 'them',
-        'black_speech': 'ul',
-        'type': 'pronoun',
-    },
-    {
-        'english': 'all',
-        'black_speech': 'uk',
-        'type': 'adjective',
-    },
     {
         'english': 'the',
         'black_speech': '',
         'type': 'ignore',
     },
-    {
-        'english': 'darkness',
-        'black_speech': 'burzum', # funny u
-        'type': 'noun',
-    },
-    {
-        'english': 'bind',
-        'black_speech': 'krimp',
-        'type': 'verb',
-    },
-    {
-        'english': 'and',
-        'black_speech': 'agh',
-        'type': 'conjunction',
-    },
-]
+] + build_dic()
 
 dic_eng_key = {
     d['english']: d
     for d in dic
 }
-
 
 # 'to' + 'verb' = '-at'
 # subject verb object
