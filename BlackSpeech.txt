@@ -1305,7 +1305,7 @@ hoards,foloku,nounplural
 hobbit,akashuga,noun
 hobbit-people,akashugahai,nounplural
 hobbit-people,akashugahai,noun
-hobbits,akashugaz,nounplural
+hobbits,akashuga,nounplural
 hold,fiith,verb
 hold,unur,noun
 holds,fiith,verbplural
