@@ -1,4 +1,7 @@
 from loop import num_items_per_loop, four_at_a_time, three_at_a_time, two_at_a_time
+
+import sys
+
 '''
 Two rings to find them
 One ring to find them all
@@ -229,11 +232,20 @@ def translate_sentence(sentence):
     return sentence + ' = ' + ' '.join(
         d['black_speech'] for d in ruled_sentence)
 
-for sentence in ('one ring to rule them all', 'one ring to find them', 'one ring to bring them all', 'And in the darkness bind them'):
-    """
-    Ash nazg durbatuluk
-    Ash nazg gimbatul
-    Ash nazg thrakatuluk
-    Agh burzum-ishi krimpatul
-    """
-    print(translate_sentence(sentence))
+if __name__ == '__main__':
+    try:
+        user_input = sys.argv[1]
+    except IndexError:
+        user_input = None
+
+    if user_input:
+        print(translate_sentence(user_input))
+    else:
+        for sentence in ('one ring to rule them all', 'one ring to find them', 'one ring to bring them all', 'And in the darkness bind them'):
+            """
+            Ash nazg durbatuluk
+            Ash nazg gimbatul
+            Ash nazg thrakatuluk
+            Agh burzum-ishi krimpatul
+            """
+            print(translate_sentence(sentence))
