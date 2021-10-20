@@ -119,36 +119,16 @@ dic_eng_key = {
     for d in dic
 }
 
-def intransitive_rule(verb):
-    return verb + 'at'
-
-def prounoun(verb, pronoun):
-    '''
-    {
-        'them':
-    }
-    '''
-    return verb + 'ul'
 
 # 'to' + 'verb' = '-at'
 # subject verb object
 
 def make_proper(words):
-    '''
-    for first, second, third, fourth in num_items_per_loop(4, words):
-        if first['type'] == 'verb' and second['type'] in ('noun',):
-            pass
-            # insert preposition before verb
-        print('fst', first, second, third, fourth)
-    return words
-    '''
     for first, second, third in three_at_a_time(words):
         yield first
 
         if first['type'] != 'preposition' and second['type'] == 'verb' and third['type'] in ('noun', 'pronoun'):
             yield dic_eng_key['to']
-        #yield second
-        #print("w", first, second)
 
 def prepose_verbs(words, next_word=None):
     try:
@@ -211,23 +191,6 @@ def translate_sentence(sentence):
 
     ruled_sentence = tuple(prepose_verbs(prepose_nouns(ignore(proper_english_sentence))))
 
-
-    """
-    try:
-        while True:
-            d = next(meta_sentence)
-
-            if d['type'] == 'preposition' and d['english'] == 'to':
-                next_d = next(meta_sentence)
-                if next_d['type'] == 'verb':
-                    ruled_sentence.append(next_d['black_speech'] + d['black_speech'])
-                else:
-                    raise Exception('unhandled')
-            else:
-                ruled_sentence.append(d['black_speech'])
-    except StopIteration:
-        pass
-    """
 
     return sentence + ' = ' + ' '.join(
         d['black_speech'] for d in ruled_sentence)
