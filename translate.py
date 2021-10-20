@@ -164,6 +164,7 @@ def prepose_verbs(words):
             'english': first['english'] + ' ' + second['english'],
             'black_speech': second['black_speech'] + 'at',
             'types': ('preposition', 'verb'),
+            'type': 'prepositioned_verb',
         }
     else:
         yield first
@@ -171,6 +172,31 @@ def prepose_verbs(words):
 
     for item in prepose_verbs(words):
         yield item
+
+def prepose_nouns(words, next_word=None):
+    try:
+        first = next(words) if next_word is None else next_word
+    except StopIteration:
+        return
+
+    try:
+        second = next(words)
+    except StopIteration:
+        yield first
+        return
+
+    if first['type'] == 'preposition' and second['type'] == 'noun':
+        yield second
+        yield first
+        for item in prepose_nouns(words, next_word=None):
+            yield item
+    else:
+        yield first
+        for item in prepose_nouns(words, next_word=second):
+            yield item
+
+def ignore(words):
+    return (word for word in words if word['type'] != 'ignore')
 
 def translate_sentence(sentence):
     meta_sentence = (
@@ -180,7 +206,7 @@ def translate_sentence(sentence):
 
     proper_english_sentence = make_proper(meta_sentence)
 
-    ruled_sentence = tuple(prepose_verbs(proper_english_sentence))
+    ruled_sentence = tuple(ignore(prepose_verbs(prepose_nouns(proper_english_sentence))))
 
 
     """
