@@ -206,7 +206,7 @@ def translate_sentence(sentence):
 
     proper_english_sentence = make_proper(meta_sentence)
 
-    ruled_sentence = tuple(ignore(prepose_verbs(prepose_nouns(proper_english_sentence))))
+    ruled_sentence = tuple(prepose_verbs(prepose_nouns(ignore(proper_english_sentence))))
 
 
     """
@@ -229,32 +229,11 @@ def translate_sentence(sentence):
     return sentence + ' = ' + ' '.join(
         d['black_speech'] for d in ruled_sentence)
 
-# Ash nazg gimbatul
-#print(translate_sentence('one ring to rule them all'))
-
-"""
-One Ring to find them
-Ash nazg gimbatul
-"""
-
-# Ash nazg gimbu
-#print(translate_sentence('one ring to find'))
-
-# Ash nazg gimbatul
-#print(translate_sentence('one ring to find them'))
-
-# Ash nazg gimbatuluk
-#print(translate_sentence('one ring to find them all'))
-#print('---')
-
 for sentence in ('one ring to rule them all', 'one ring to find them', 'one ring to bring them all', 'And in the darkness bind them'):
+    """
+    Ash nazg durbatuluk
+    Ash nazg gimbatul
+    Ash nazg thrakatuluk
+    Agh burzum-ishi krimpatul
+    """
     print(translate_sentence(sentence))
-
-#print(translate_sentence('one ring to rule'))
-#print(translate_sentence('one ring to rule them'))
-
-"""
-And in the darkness bind them
-Agh burzum-ishi krimpatul
-"""
-#print(translate_sentence('And in the darkness bind them'))
