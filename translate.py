@@ -147,9 +147,9 @@ def make_proper(words):
         #yield second
         #print("w", first, second)
 
-def prepose_verbs(words):
+def prepose_verbs(words, next_word=None):
     try:
-        first = next(words)
+        first = next(words) if next_word is None else next_word
     except StopIteration:
         return
 
@@ -166,12 +166,12 @@ def prepose_verbs(words):
             'types': ('preposition', 'verb'),
             'type': 'prepositioned_verb',
         }
+        for item in prepose_verbs(words, next_word=None):
+            yield item
     else:
         yield first
-        yield second
-
-    for item in prepose_verbs(words):
-        yield item
+        for item in prepose_verbs(words, next_word=second):
+            yield item
 
 def prepose_nouns(words, next_word=None):
     try:
